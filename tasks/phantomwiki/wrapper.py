@@ -10,6 +10,9 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
     logger.info("    Loading PhantomWiki dataset from HuggingFace...")
 
     ds_qa = load_dataset("kilian-group/phantom-wiki-v1", "question-answer", split="depth_20_size_50_seed_1")
+    ds_corpus = load_dataset("kilian-group/phantom-wiki-v1", "text-corpus", split="depth_20_size_50_seed_1")
+
+    corpus_text = "\n\n".join([f"{item['article']}" for item in ds_corpus])
 
     client = OpenAI(base_url=f"http://{host}:{port}/v1", api_key="dummy")
 
@@ -18,23 +21,22 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
 
     for example in ds_qa:
         question = example['question']
-        answer = example['answer']
+        answers = example['answer']
 
         try:
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are a helpful assistant that answers questions based on provided information. Provide concise, direct answers."},
+                    {"role": "system", "content": f"You are a helpful assistant that answers questions based on the following information:\n\n{corpus_text}\n\nProvide concise, direct answers with just the name(s)."},
                     {"role": "user", "content": question}
                 ],
                 temperature=0.0,
-                max_tokens=50
+                max_tokens=100
             )
 
             predicted = response.choices[0].message.content.strip().lower()
-            ground_truth = str(answer).strip().lower()
 
-            if ground_truth in predicted or predicted in ground_truth:
+            if any(ans.lower() in predicted for ans in answers):
                 correct += 1
 
             total += 1
