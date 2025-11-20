@@ -21,7 +21,6 @@ disable_progress_bar()
 BENCHMARK_TAXONOMY = {
     'austenalike': {'feature': 'Story', 'aspect': 'Agent/Attributes'},
     'culemo': {'feature': 'Story', 'aspect': 'Agent/Emotional State'},
-    'ditto': {'feature': 'Story', 'aspect': 'Agent/Role'},
     'phantomwiki': {'feature': 'Story', 'aspect': 'Social Networks/Connections'},
     'storysumm': {'feature': 'Story', 'aspect': 'Plot/Plotline'},
     'tot': {'feature': 'Discourse', 'aspect': 'Time/Order'},
