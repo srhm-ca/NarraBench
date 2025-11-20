@@ -47,7 +47,7 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
 
             total += 1
 
-            if total % 200 == 0:
+            if total % 100 == 0:
                 logger.info(f"    {total}/{len(ds)}")
         except Exception as e:
             logger.error(f"    Error: {e}")
