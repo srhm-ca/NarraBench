@@ -17,9 +17,9 @@ def normalize_answer(answer: str) -> str:
     return answer
 
 
-def evaluate_qa(question: str, ground_truth: str, client: OpenAI, model: str) -> bool:
+def evaluate_qa(question: str, ground_truth: str, events_context: str, client: OpenAI, model: str) -> bool:
     messages = [
-        {"role": "system", "content": "You are a helpful assistant that answers questions about events. Provide concise, direct answers."},
+        {"role": "system", "content": f"You are a helpful assistant that answers questions about events based on this event log:\n\n{events_context}\n\nProvide concise, direct answers."},
         {"role": "user", "content": question}
     ]
 
@@ -55,13 +55,26 @@ def evaluate_qa(question: str, ground_truth: str, client: OpenAI, model: str) ->
 
 def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judge_port: int = None) -> float:
     data_path = Path(__file__).parent / "traveler-original" / "dataset" / "explicit" / "5Events.json"
+    events_path = Path(__file__).parent / "traveler-original" / "events" / "100Events.json"
+
     if not data_path.exists():
         raise FileNotFoundError(f"Data file not found: {data_path}")
+    if not events_path.exists():
+        raise FileNotFoundError(f"Events file not found: {events_path}")
 
     client = OpenAI(base_url=f"http://{host}:{port}/v1", api_key="dummy")
 
     with open(data_path, 'r') as f:
         data = json.load(f)
+
+    with open(events_path, 'r') as f:
+        events = json.load(f)
+
+    from datetime import datetime
+    events_text = "\n".join([
+        f"- {e['Subject']} {e['Action']} {e['Object']} in the {e['Location']} on {datetime.fromtimestamp(e['Timestamp']).strftime('%Y-%m-%d')}"
+        for e in events
+    ])
 
     correct = 0
     total = 0
@@ -70,7 +83,7 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
         question = item['text']
         ground_truth = item['gt_answers']
 
-        is_correct = evaluate_qa(question, ground_truth, client, model)
+        is_correct = evaluate_qa(question, ground_truth, events_text, client, model)
         if is_correct:
             correct += 1
         total += 1
