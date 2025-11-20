@@ -24,7 +24,7 @@ These benchmarks are collected according to a theory-informed taxonomy of narrat
 |--------|----------|------------|------------|
 | **name** | *who are the characters in the text?* | <kbd>local</kbd> <kbd>discrete</kbd> <kbd>deterministic</kbd> | - |
 | **name** | *who are the main characters in the text?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>consensus</kbd> | - |
-| **role** | *what is the character's role in the text?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>perspectival</kbd> | [Ditto](https://github.com/OFA-Sys/Ditto) |
+| **role** | *what is the character's role in the text?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>perspectival</kbd> | - |
 | **attributes** | *what attributes does this character have?* | <kbd>local</kbd> <kbd>discrete</kbd> <kbd>deterministic</kbd> | - |
 | **attributes** | *what attributes does this character have?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>consensus</kbd> | [AustenAlike](https://github.com/Wellesley-EASEL-lab/AustenAlike) |
 | **emotional state** | *what is the character feeling right now?* | <kbd>local</kbd> <kbd>discrete</kbd> <kbd>perspectival</kbd> | - |
