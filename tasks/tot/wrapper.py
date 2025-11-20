@@ -26,23 +26,31 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
         question = example['question']
         label = example['label']
 
-        full_prompt = f"{prompt}\n\n{question}\n\nAnswer with only the entity ID (e.g., E76):"
-
         try:
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are a helpful assistant that answers temporal reasoning questions. Provide only the entity ID as your answer."},
-                    {"role": "user", "content": full_prompt}
+                    {"role": "system", "content": "You are a helpful assistant that answers temporal reasoning questions based on temporal facts. Output only a valid JSON string with two fields: 'explanation' and 'answer'. The answer field should contain the entity ID (e.g., E76)."},
+                    {"role": "user", "content": prompt}
                 ],
                 temperature=0.0,
-                max_tokens=20
+                max_tokens=200
             )
 
-            predicted = normalize_answer(response.choices[0].message.content)
+            answer_text = response.choices[0].message.content.strip()
+
+            import json
+            import re
+            try:
+                parsed = json.loads(answer_text)
+                predicted = normalize_answer(parsed.get('answer', ''))
+            except:
+                match = re.search(r'E\d+', answer_text)
+                predicted = normalize_answer(match.group(0) if match else '')
+
             ground_truth = normalize_answer(label)
 
-            if ground_truth in predicted or predicted == ground_truth:
+            if predicted == ground_truth or ground_truth in predicted:
                 correct += 1
 
             total += 1
