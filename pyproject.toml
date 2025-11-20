@@ -3,4 +3,6 @@ name = "narrabench"
 version = "0.1.0"
 dependencies = [
     "datasets",
+    "openai",
+    "tqdm",
 ]

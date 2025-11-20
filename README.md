@@ -12,6 +12,7 @@ These benchmarks are collected according to a theory-informed taxonomy of narrat
     - [Narration](#narration)
     - [Discourse](#discourse)
     - [Situatedness](#situatedness)
+  - [Run](#run)
   - [Submission](#submission)
 
 ## Benchmarks
@@ -133,17 +134,31 @@ These benchmarks are collected according to a theory-informed taxonomy of narrat
 |--------|----------|------------|------------|
 | **intent** | *what is the author's intent in telling this story?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>perspectival</kbd> | - |
 
+## Run
+1. Install Prolog and enable `git lfs`
+2. Install dependencies: `pip install -e .`
+3. Run `setup.py` to pull all benchmarks
+4. Start Ollama server on port 11434
+5. Start judge model server on port 11435 (we use `gpt-oss:20b` to normalize results)
+6. Run `run.py` to run all models.
+
 ## Submission
 To submit a new benchmark to NarraBench, please raise a PR with this template:
 ```
 Name: <fill>
 Link: <fill>
+License: <fill>
 Dimension: <fill>
 Feature: <fill>
 Aspect: <fill>
 Scale: <fill>
 Mode: <fill>
 Variance: <fill>
+
+Citation: 
+```
+<fill>
+```
 
 Rationale: <1-2 sentences describing what this benchmark provides.>
 ```

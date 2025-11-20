@@ -1,5 +1,3 @@
-"""Setup script for TRAM benchmark"""
-
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -16,3 +14,9 @@ if not original_repo_dir.exists():
 
     (benchmark_dir / "TRAM-Benchmark-main").rename(original_repo_dir)
     zip_path.unlink()
+
+datasets_dir = original_repo_dir / "datasets"
+if datasets_dir.exists():
+    for dataset_zip in datasets_dir.glob("*.zip"):
+        with zipfile.ZipFile(dataset_zip, 'r') as zf:
+            zf.extractall(datasets_dir)

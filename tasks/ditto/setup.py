@@ -1,5 +1,6 @@
 import urllib.request
 import zipfile
+import subprocess
 from pathlib import Path
 
 benchmark_dir = Path(__file__).parent
@@ -14,3 +15,6 @@ if not original_repo_dir.exists():
 
     (benchmark_dir / "Ditto-main").rename(original_repo_dir)
     zip_path.unlink()
+
+if original_repo_dir.exists():
+    subprocess.run(["git", "lfs", "pull"], cwd=original_repo_dir, check=False)
