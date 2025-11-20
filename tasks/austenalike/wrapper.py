@@ -64,13 +64,13 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
 
         char1_idx = CHARACTERS.index(char1) + 1
 
-        question = f"Which character is {char1} most similar to (other than {char1})? Respond with only the character name. Do not choose {char1}."
+        question = f"Based on your knowledge of Jane Austen's novels, which character from the list is {char1} most similar to in terms of personality, social role, or narrative function? Respond with only the character name. Do not choose {char1} themselves."
 
         try:
             response = test_client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": f"Consider the following list of Jane Austen characters:\n\n{character_list}"},
+                    {"role": "system", "content": f"You are an expert on Jane Austen's novels. Consider the following list of characters from Emma, Mansfield Park, Northanger Abbey, Persuasion, Pride and Prejudice, and Sense and Sensibility:\n\n{character_list}\n\nUse your knowledge of these characters' personalities, roles, and story arcs to determine similarity."},
                     {"role": "user", "content": question}
                 ],
                 temperature=0.0,
