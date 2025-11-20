@@ -20,7 +20,7 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
     correct = 0
     total = 0
 
-    for row in data:
+    for row in data[:1000]:
         question = row['Question']
         option_a = row['Option A']
         option_b = row['Option B']
@@ -56,8 +56,8 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
                 correct += 1
             total += 1
 
-            if total % 1000 == 0:
-                logger.info(f"    {total}/{len(data)}")
+            if total % 100 == 0:
+                logger.info(f"    {total}/{min(len(data), 1000)}")
         except Exception as e:
             logger.error(f"    Error: {e}")
             continue

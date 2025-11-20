@@ -66,7 +66,7 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
     correct = 0
     total = 0
 
-    for item in data:
+    for item in data[:1000]:
         question = item['text']
         ground_truth = item['gt_answers']
 
@@ -76,7 +76,7 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
         total += 1
 
         if total % 20 == 0:
-            logger.info(f"    {total}/{len(data)}")
+            logger.info(f"    {total}/{min(len(data), 1000)}")
 
     accuracy = correct / total if total > 0 else 0.0
     logger.info(f"    {total} examples, {correct} correct")

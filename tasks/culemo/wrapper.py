@@ -25,7 +25,7 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
     correct_sentiment = 0
     total = 0
 
-    for row in data:
+    for row in data[:1000]:
         text = row['text_eng']
         emotion_label = row['emotion_eng']
         sentiment_label = row['sentiment_eng']
@@ -66,7 +66,7 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
             total += 1
 
             if total % 50 == 0:
-                logger.info(f"    {total}/{len(data)}")
+                logger.info(f"    {total}/{min(len(data), 1000)}")
         except Exception as e:
             logger.error(f"    Error: {e}")
             continue

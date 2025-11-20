@@ -28,7 +28,7 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
     correct = 0
     total = 0
 
-    for key, item in data.items():
+    for key, item in list(data.items())[:1000]:
         story = item['story'].strip()
         summary = ' '.join(item['summary'])
         true_label = item['label']
@@ -66,7 +66,7 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
             total += 1
 
             if total % 10 == 0:
-                logger.info(f"    {total}/{len(data)}")
+                logger.info(f"    {total}/{min(len(data), 1000)}")
         except Exception as e:
             logger.error(f"    Error: {e}")
             continue

@@ -21,7 +21,7 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
     correct = 0
     total = 0
 
-    for example in ds:
+    for example in list(ds)[:1000]:
         prompt = example['prompt']
         question = example['question']
         label = example['label']
@@ -48,7 +48,7 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
             total += 1
 
             if total % 100 == 0:
-                logger.info(f"    {total}/{len(ds)}")
+                logger.info(f"    {total}/{min(len(ds), 1000)}")
         except Exception as e:
             logger.error(f"    Error: {e}")
             continue
