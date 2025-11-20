@@ -36,27 +36,6 @@ def get_character_list_text():
     return "\n".join([f"{i+1}. {char}" for i, char in enumerate(CHARACTERS)])
 
 
-def load_novels() -> str:
-    texts_dir = Path(__file__).parent / "texts"
-    novels = []
-    for novel_file in ["emma.txt", "pride-and-prejudice.txt", "sense-and-sensibility.txt",
-                       "persuasion.txt", "mansfield-park.txt", "northanger-abbey.txt"]:
-        novel_path = texts_dir / novel_file
-        if novel_path.exists():
-            with open(novel_path, 'r', encoding='utf-8') as f:
-                text = f.read()
-                start = text.find("CHAPTER I")
-                if start == -1:
-                    start = text.find("Chapter 1")
-                if start == -1:
-                    start = 0
-                end = text.find("*** END OF THE PROJECT GUTENBERG EBOOK")
-                if end == -1:
-                    end = len(text)
-                novels.append(text[start:end].strip())
-    return "\n\n---\n\n".join(novels)
-
-
 def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judge_port: int = None) -> float:
     if not judge_host or not judge_port:
         raise ValueError("AustenAlike requires judge model. Provide --judge-host and --judge-port")
@@ -72,8 +51,6 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
         reader = csv.DictReader(f)
         data = [row for row in reader if int(row['Count']) > 0]
 
-    logger.info("    Loading Jane Austen novels...")
-    novels_text = load_novels()
     character_list = get_character_list_text()
     correct = 0
     total = 0
@@ -87,13 +64,13 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
 
         char1_idx = CHARACTERS.index(char1) + 1
 
-        question = f"Based on the novels provided, which character from the list is {char1} most similar to in terms of personality, social role, or narrative function? Respond with only the character name. Do not choose {char1} themselves."
+        question = f"Based on your knowledge of Jane Austen's novels, which character from the list is {char1} most similar to in terms of personality, social role, or narrative function? Respond with only the character name. Do not choose {char1} themselves."
 
         try:
             response = test_client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": f"You are analyzing characters from Jane Austen's novels. Here are the complete texts:\n\n{novels_text}\n\nBased on these novels, consider the following character list:\n\n{character_list}"},
+                    {"role": "system", "content": f"You are an expert on Jane Austen's novels. Consider the following list of characters from Emma, Mansfield Park, Northanger Abbey, Persuasion, Pride and Prejudice, and Sense and Sensibility:\n\n{character_list}\n\nUse your knowledge of these characters' personalities, roles, and story arcs to determine similarity."},
                     {"role": "user", "content": question}
                 ],
                 temperature=0.0,
