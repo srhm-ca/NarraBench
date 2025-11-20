@@ -11,6 +11,24 @@ from tqdm import tqdm
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 logger = logging.getLogger(__name__)
 
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("openai").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
+
+from datasets.utils.logging import disable_progress_bar
+disable_progress_bar()
+
+BENCHMARK_TAXONOMY = {
+    'austenalike': {'feature': 'Story', 'aspect': 'Agent/Attributes'},
+    'culemo': {'feature': 'Story', 'aspect': 'Agent/Emotional State'},
+    'ditto': {'feature': 'Story', 'aspect': 'Agent/Role'},
+    'phantomwiki': {'feature': 'Story', 'aspect': 'Social Networks/Connections'},
+    'storysumm': {'feature': 'Story', 'aspect': 'Plot/Plotline'},
+    'tot': {'feature': 'Discourse', 'aspect': 'Time/Order'},
+    'tram': {'feature': 'Discourse', 'aspect': 'Time/Order'},
+    'traveler': {'feature': 'Discourse', 'aspect': 'Time/Order'},
+}
+
 
 def discover_benchmarks(tasks_dir: Path):
     benchmarks = []
@@ -62,23 +80,29 @@ def main():
         try:
             wrapper = load_wrapper(benchmark['wrapper'])
             accuracy = wrapper.run_benchmark(args.model, args.host, args.port, args.judge_host, args.judge_port)
+            taxonomy = BENCHMARK_TAXONOMY.get(benchmark['name'], {'feature': 'Unknown', 'aspect': 'Unknown'})
             results.append({
                 'benchmark': benchmark['name'],
                 'model': args.model,
+                'feature': taxonomy['feature'],
+                'aspect': taxonomy['aspect'],
                 'accuracy': accuracy
             })
             tqdm.write(f"  ✓ {accuracy:.4f}")
         except Exception as e:
             tqdm.write(f"  ✗ Error: {e}")
+            taxonomy = BENCHMARK_TAXONOMY.get(benchmark['name'], {'feature': 'Unknown', 'aspect': 'Unknown'})
             results.append({
                 'benchmark': benchmark['name'],
                 'model': args.model,
+                'feature': taxonomy['feature'],
+                'aspect': taxonomy['aspect'],
                 'accuracy': None
             })
 
     logger.info(f"\n{'=' * 60}")
     with open(args.output, 'w', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=['benchmark', 'model', 'accuracy'])
+        writer = csv.DictWriter(f, fieldnames=['benchmark', 'model', 'feature', 'aspect', 'accuracy'])
         writer.writeheader()
         writer.writerows(results)
 

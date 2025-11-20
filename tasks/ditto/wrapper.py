@@ -14,11 +14,15 @@ def run_benchmark(model: str, host: str, port: int, judge_host: str = None, judg
     if not data_path.exists():
         raise FileNotFoundError(f"Data file not found: {data_path}. Run setup.py and ensure git lfs is installed.")
 
+    with open(data_path, 'r') as f:
+        first_line = f.readline()
+        if 'git-lfs' in first_line:
+            raise FileNotFoundError(f"Git LFS data not downloaded. Run 'cd {data_path.parent.parent} && git lfs pull'")
+        f.seek(0)
+        data = [json.loads(line) for line in f if line.strip()]
+
     test_client = OpenAI(base_url=f"http://{host}:{port}/v1", api_key="dummy")
     judge_client = OpenAI(base_url=f"http://{judge_host}:{judge_port}/v1", api_key="dummy")
-
-    with open(data_path, 'r') as f:
-        data = [json.loads(line) for line in f if line.strip()]
 
     data = [d for d in data if d.get('meta', {}).get('lang') == 'en'][:50]
 
