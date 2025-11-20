@@ -23,11 +23,11 @@ These benchmarks are collected according to a theory-informed taxonomy of narrat
 |--------|----------|------------|------------|
 | **name** | *who are the characters in the text?* | <kbd>local</kbd> <kbd>discrete</kbd> <kbd>deterministic</kbd> | - |
 | **name** | *who are the main characters in the text?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>consensus</kbd> | - |
-| **role** | *what is the character's role in the text?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>perspectival</kbd> | [Crab](link), [Ditto](link) |
+| **role** | *what is the character's role in the text?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>perspectival</kbd> | [Crab](https://github.com/KaiHe-better/Crab), [Ditto](https://github.com/OFA-Sys/Ditto) |
 | **attributes** | *what attributes does this character have?* | <kbd>local</kbd> <kbd>discrete</kbd> <kbd>deterministic</kbd> | - |
-| **attributes** | *what attributes does this character have?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>consensus</kbd> | [AustenAlike](link) |
+| **attributes** | *what attributes does this character have?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>consensus</kbd> | [AustenAlike](https://github.com/Wellesley-EASEL-lab/AustenAlike) |
 | **emotional state** | *what is the character feeling right now?* | <kbd>local</kbd> <kbd>discrete</kbd> <kbd>perspectival</kbd> | - |
-| **emotional state** | *what are the central emotional states the character has experienced?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>perspectival</kbd> | [CULEMO](link) |
+| **emotional state** | *what are the central emotional states the character has experienced?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>perspectival</kbd> | [CULEMO](https://github.com/llm-for-emotion/culemo) |
 | **motivation** | *why is the character doing what they are doing right now?* | <kbd>local</kbd> <kbd>discrete</kbd> <kbd>perspectival</kbd> | - |
 | **motivation** | *what have been the character's core motivations behind their actions? What motivates this character?* | <kbd>global</kbd> <kbd>progressive</kbd> <kbd>perspectival</kbd> | - |
 
@@ -36,7 +36,7 @@ These benchmarks are collected according to a theory-informed taxonomy of narrat
 | Aspect | Question | Properties | Benchmarks |
 |--------|----------|------------|------------|
 | **interaction type** | *how are these two characters interacting?* | <kbd>local</kbd> <kbd>discrete</kbd> <kbd>deterministic</kbd> | - |
-| **connections** | *who does the character know?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>deterministic</kbd> | [PhantomWiki](link) |
+| **connections** | *who does the character know?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>deterministic</kbd> | [PhantomWiki](https://github.com/kilian-group/phantom-wiki) |
 | **relationship type** | *what is the relationship type between these two characters?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>consensus</kbd> | - |
 
 #### Event
@@ -54,7 +54,7 @@ These benchmarks are collected according to a theory-informed taxonomy of narrat
 |--------|----------|------------|------------|
 | **topic** | *what is/are the topic(s) of this story?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>consensus</kbd> | - |
 | **plot** | *what is the plot summary?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>perspectival</kbd> | - |
-| **plotline** | *what happened in this plotline?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>consensus</kbd> | [StorySumm](link) |
+| **plotline** | *what happened in this plotline?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>consensus</kbd> | [StorySumm](https://github.com/melaniesubbiah/storysumm) |
 | **moral** | *what is the moral of the story?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>perspectival</kbd> | - |
 | **obstacle** | *what is the central negative force of the story?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>perspectival</kbd> | - |
 | **conflict** | *what is the central conflict of this story?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>perspectival</kbd> | - |
@@ -84,9 +84,9 @@ These benchmarks are collected according to a theory-informed taxonomy of narrat
 | **duration** | *how much time is passing?* | <kbd>local</kbd> <kbd>discrete</kbd> <kbd>deterministic</kbd> | - |
 | **duration** | *how much time has passed since the previous scene?* | <kbd>global</kbd> <kbd>progressive</kbd> <kbd>deterministic</kbd> | - |
 | **duration** | *how much time has passed?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>deterministic</kbd> | - |
-| **order** | *does this scene come before the prior scene, come after, or indicate a future that has not yet happened?* | <kbd>global</kbd> <kbd>progressive</kbd> <kbd>deterministic</kbd> | [TRaVelER](link), [ToT](link) |
-| **order** | *does this story tell events out of order?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>deterministic</kbd> | [MAVEN_ERE](link), [TRAM](link) |
-
+| **order** | *does this scene come before the prior scene, come after, or indicate a future that has not yet happened?* | <kbd>global</kbd> <kbd>progressive</kbd> <kbd>deterministic</kbd> | [TRaVelER](https://gitlab.ub.uni-bielefeld.de/s.kenneweg/TRaVelER), [ToT](https://huggingface.co/datasets/baharef/ToT) |
+| **order** | *does this story tell events out of order?* | <kbd>global</kbd> <kbd>holistic</kbd> <kbd>deterministic</kbd> | [MAVEN_ERE](https://github.com/THU-KEG/MAVEN-ERE), [TRAM](https://github.com/EternityYW/TRAM-Benchmark) |
+****
 #### Revelation
 
 | Aspect | Question | Properties | Benchmarks |
